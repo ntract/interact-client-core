@@ -32,10 +32,7 @@ plugins.config(function(done) {
 	        },
 	        {
 	            test: window.console == undefined,
-	            yep: path+"consoles.js"
-	        },
-	        {
-	            load: path+"require.js",
+	            yep: path+"consoles.js",
 	            complete: function () {
 
 			        requirejs.config({
