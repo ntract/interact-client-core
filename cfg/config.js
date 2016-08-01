@@ -1,6 +1,6 @@
 plugins.config(function(done) {
 
-	var path = "plugins/interact-client-core/res/";
+	var path = "plugins/ntract-client-core/res/";
 
 	plugins.createScript({
 		"src": path+"modernizr.js"
