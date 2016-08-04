@@ -3,6 +3,28 @@
     var startedCallbacks = [];
     var configuredCallbacks = [];
     var isConfigured = false;
+
+    var priv = {
+        startedHandle: null,
+        allowStarted: false,
+
+        started: function() {
+            if (!priv.allowStarted) return;
+            if (priv.startedHandle) return;
+            priv.startedHandle = setInterval(function() {
+                for (var i = 0, l = startedCallbacks.length; i < l; i++) {
+                    try {
+                        startedCallbacks[i]();
+                    } catch(e) {}
+                }
+                startedCallbacks.length = 0;
+                clearInterval(priv.startedHandle);
+                priv.startedHandle = null;
+            }, 250);
+
+        }
+
+    };
     
 	window.plugins = {
 
@@ -21,15 +43,10 @@
                 plugins.createScript({
                     "src": "_plugins.js"
                 });
-
-                setTimeout(function() {
-                    for (var i = 0, l = startedCallbacks.length; i < l; i++) {
-                        try {
-                            startedCallbacks[i]();
-                        } catch(e) {}
-                    }
-                }, 250);
                 
+                priv.allowStarted = true;
+                priv.started();
+
             });
             
             plugins.createScript({
@@ -64,6 +81,7 @@
 
         started: function(callback) {
         	startedCallbacks.push(callback);
+            priv.started();
         },
 
         waitFor: function(test, callback) {
