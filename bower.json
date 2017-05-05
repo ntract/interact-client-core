@@ -1,6 +1,5 @@
 {
    "name": "ntract-client-core",
-   "version": "0.0.4",
    "license": "GPL-3",
    "config": [
    		"cfg/config.js"
